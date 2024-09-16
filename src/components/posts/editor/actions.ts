@@ -2,7 +2,6 @@
 
 import { validateRequest } from '@/auth'
 import { createNewPost } from '@/controllers/posts'
-import prisma from '@/lib/prisma'
 import { createPostSchema } from '@/lib/validation'
 
 export const submitPost = async (input: string) => {

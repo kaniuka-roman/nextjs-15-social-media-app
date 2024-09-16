@@ -4,7 +4,12 @@ export const getUserFollowers = async (id: string) => {
    return await prisma.user.findMany({
       where: {
          NOT: {
-            id: id,
+            id,
+         },
+         followers: {
+            none: {
+               followerId: id,
+            },
          },
       },
       select: {
@@ -12,6 +17,19 @@ export const getUserFollowers = async (id: string) => {
          avatarUrl: true,
          displayName: true,
          username: true,
+         followers: {
+            where: {
+               followerId: id,
+            },
+            select: {
+               followerId: true,
+            },
+         },
+         _count: {
+            select: {
+               followers: true,
+            },
+         },
       },
       take: 5,
    })

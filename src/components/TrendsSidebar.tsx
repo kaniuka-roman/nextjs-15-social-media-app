@@ -9,6 +9,7 @@ import { unstable_cache } from 'next/cache'
 import prisma from '@/lib/prisma'
 import { bigint } from 'zod'
 import { formatNumber } from '@/lib/utils'
+import { FollowButton } from './FollowButton'
 
 export const TrendsSidebar = () => {
    return (
@@ -37,7 +38,13 @@ const WhoToFollow = async () => {
                      <p className="line-clamp-1 break-all text-muted-foreground">@{user.username}</p>
                   </div>
                </Link>
-               <Button>Follow</Button>
+               <FollowButton
+                  userId={user.id}
+                  initialState={{
+                     followers: user._count.followers,
+                     isFollowedByUser: user.followers.some(({ followerId }) => followerId === user.id),
+                  }}
+               />
             </div>
          ))}
       </div>
