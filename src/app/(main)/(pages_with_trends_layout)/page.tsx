@@ -3,7 +3,7 @@ import { ForYouFeed } from '../ForYouFeed'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { FollowingFeed } from '../FollowingFeed'
 
-export default async function Home() {
+export default function Home() {
    return (
       <main className="min-w-0 w-full">
          <div className="w-full min-w-0 space-y-5">

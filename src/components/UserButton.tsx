@@ -50,8 +50,8 @@ export const UserButton = ({ className }: UserButtonProps) => {
    return (
       <DropdownMenu>
          <DropdownMenuTrigger asChild>
-            <button className={cn('flex-none rounded-full bg-secondary', className)}>
-               <UserAvatar avatarUrl={user.avatarUrl} size={40} />
+            <button className={cn('flex-none rounded-full bg-secondary p-1', className)}>
+               <UserAvatar avatarUrl={user.avatarUrl} size={32} />
             </button>
          </DropdownMenuTrigger>
          <DropdownMenuContent>
@@ -73,10 +73,16 @@ export const UserButton = ({ className }: UserButtonProps) => {
                      {themes.map(({ name, text, icon }) => {
                         const Icon = icon
                         return (
-                           <DropdownMenuItem key={name} className="cursor-pointer min-w-max" onClick={() => setTheme(name)}>
+                           <DropdownMenuItem
+                              key={name}
+                              className="cursor-pointer min-w-max"
+                              onClick={() => setTheme(name)}
+                           >
                               <Icon className="mr-2 size-4" />
                               {text}
-                              <div className="h-4 ml-auto pl-2 min-w-6">{theme === name && <Check className="size-4" />}</div>
+                              <div className="h-4 ml-auto pl-2 min-w-6">
+                                 {theme === name && <Check className="size-4" />}
+                              </div>
                            </DropdownMenuItem>
                         )
                      })}

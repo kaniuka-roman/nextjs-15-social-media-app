@@ -29,7 +29,9 @@ export const Post = ({ post }: PostProps) => {
                   </Link>
                </div>
             </div>
-            {post.userId === user.id && <PostMoreButton post={post} className="opacity-0 transition-opacity group-hover/post:opacity-100" />}
+            {post.userId === user.id && (
+               <PostMoreButton post={post} className="opacity-0 transition-opacity group-hover/post:opacity-100" />
+            )}
          </div>
          <div className="whitespace-pre-line break-words">{post.content}</div>
       </article>

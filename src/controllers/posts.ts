@@ -4,7 +4,9 @@ type GetPostsWithUserDataParams = {
    pageSize: number
    cursor: string | null
 }
-type GetPostsFollowedUsersParams = Partial<GetPostsWithUserDataParams> & { id: string }
+type UserId = { userId: string }
+type GetUserPosts = Partial<GetPostsWithUserDataParams> & UserId
+type GetPostsFollowedUsersParams = Partial<GetPostsWithUserDataParams> & UserId
 type CreateNewPostParams = {
    content: string
    userId: string
@@ -28,13 +30,25 @@ export const getPostsWithUserData = async (params?: GetPostsWithUserDataParams) 
    })
    return posts
 }
+export const getUserPosts = async (params: GetUserPosts) => {
+   console.log('getUserPosts ~ params:', params)
+   const posts = await prisma.post.findMany({
+      where: { userId: params.userId },
+      orderBy: { createdAt: 'desc' },
+      include: postDataInclude,
+      take: params?.pageSize ?? undefined,
+      skip: params?.cursor ? 1 : 0,
+      cursor: params?.cursor ? { id: params?.cursor } : undefined,
+   })
+   return posts
+}
 export const getPostsFollowedUsers = async (params: GetPostsFollowedUsersParams) => {
    const posts = await prisma.post.findMany({
       where: {
          user: {
             followers: {
                some: {
-                  followerId: params.id,
+                  followerId: params.userId,
                },
             },
          },

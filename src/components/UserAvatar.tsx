@@ -1,6 +1,6 @@
 import avatarPlaceholder from '@/assets/avatar-placeholder.png'
 import { cn } from '@/lib/utils'
-import { CircleUserRound } from 'lucide-react'
+import { User } from 'lucide-react'
 import Image from 'next/image'
 
 type UserAvatarProps = {
@@ -21,7 +21,12 @@ export const UserAvatar = ({ avatarUrl, size, className }: UserAvatarProps) => {
                className={cn('aspect-square h-fit flex-none rounded-full bg-secondary object-cover', className)}
             />
          ) : (
-            <CircleUserRound strokeWidth={1} width={size ?? 48} height={size ?? 48} />
+            <User
+               className={cn('aspect-square h-fit flex-none rounded-full bg-secondary object-cover', className)}
+               strokeWidth={1}
+               width={size ?? 48}
+               height={size ?? 48}
+            />
          )}
       </>
    )
