@@ -28,6 +28,7 @@ export const useSubmitPostMutation = () => {
                   pages: oldData.pages.map((page, i) => (i === 0 ? [newPost, ...page] : page)),
                }
             }
+            return oldData
          })
          queryClient.invalidateQueries({
             queryKey: queryFilter.queryKey,

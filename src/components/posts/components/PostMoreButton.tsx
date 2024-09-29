@@ -2,8 +2,8 @@ import { PostType } from '@/controllers/posts'
 import { useState } from 'react'
 import { DeletePostDialog } from './DeletePostDialog'
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu'
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
-import { Button } from '../ui/button'
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../../ui/dropdown-menu'
+import { Button } from '../../ui/button'
 import { MoreHorizontal, Trash2 } from 'lucide-react'
 
 export type PostMoreButtonProps = {

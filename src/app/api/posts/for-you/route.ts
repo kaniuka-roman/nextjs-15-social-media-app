@@ -1,5 +1,5 @@
 import { validateRequest } from '@/auth'
-import { getPostsWithUserData } from '@/controllers/posts'
+import { getPosts } from '@/controllers/posts'
 import { NextRequest } from 'next/server'
 
 export const GET = async (req: NextRequest) => {
@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
       if (!user) {
          return Response.json({ error: 'Unauthenticated' }, { status: 401 })
       }
-      const posts = await getPostsWithUserData({ pageSize, cursor })
+      const posts = await getPosts({ pageSize, cursor, userId: user.id })
       return Response.json(posts)
    } catch (error) {
       console.log('GET ~ error:', error)

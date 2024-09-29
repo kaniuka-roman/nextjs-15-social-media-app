@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
       if (!user) {
          return Response.json({ error: 'Unauthenticated' }, { status: 401 })
       }
-      const posts = await getPostsFollowedUsers({ pageSize, cursor, id: user.id })
+      const posts = await getPostsFollowedUsers({ pageSize, cursor, userId: user.id })
       return Response.json(posts)
    } catch (error) {
       console.log('GET ~ error:', error)

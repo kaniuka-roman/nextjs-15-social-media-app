@@ -27,7 +27,7 @@ export const generateMetadata = async ({ params: { username } }: PageProps): Pro
 }
 export default async function Page({ params: { username } }: PageProps) {
    const { user: loggedInUser } = await validateRequest()
-   if (!loggedInUser) return <p className="text-destructive">{"You're not authorized to view this oage"}</p>
+   if (!loggedInUser) return <p className="text-destructive">{"You're not authorized to view this page"}</p>
    const user = await getUser(username, loggedInUser.id)
    return (
       <main className="flex w-full min-w-0 gap-5">

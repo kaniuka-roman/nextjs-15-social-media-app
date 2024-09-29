@@ -1,8 +1,8 @@
 import { PostType } from '@/controllers/posts'
-import { useDeletePostMutation } from './mutations'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog'
-import { LoadingButton } from '../LoadingButton'
-import { Button } from '../ui/button'
+import { useDeletePostMutation } from '../mutations'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../ui/dialog'
+import { LoadingButton } from '../../LoadingButton'
+import { Button } from '../../ui/button'
 
 export type DeletePostDialogProps = {
    post: PostType
@@ -20,10 +20,16 @@ export const DeletePostDialog = ({ onClose, open, post }: DeletePostDialogProps)
          <DialogContent>
             <DialogHeader>
                <DialogTitle>Delete post?</DialogTitle>
-               <DialogDescription>Are u sure you want delete this post? This action cannot been undone.</DialogDescription>
+               <DialogDescription>
+                  Are u sure you want delete this post? This action cannot been undone.
+               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-               <LoadingButton loading={mutation.isPending} variant="destructive" onClick={() => mutation.mutate(post.id, { onSuccess: onClose })}>
+               <LoadingButton
+                  loading={mutation.isPending}
+                  variant="destructive"
+                  onClick={() => mutation.mutate(post.id, { onSuccess: onClose })}
+               >
                   Delete
                </LoadingButton>
                <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>

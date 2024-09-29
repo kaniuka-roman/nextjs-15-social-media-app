@@ -1,8 +1,8 @@
 'use client'
 
-import { InfiniteScrollContainer } from '@/components/InfiniteScrollConainer'
+import { InfiniteScrollContainer } from '@/components/InfiniteScrollContainer'
 import { Post } from '@/components/posts/Post'
-import { PostsLoadingSkeleton } from '@/components/posts/PostsLoadingSkeleton'
+import { PostsLoadingSkeleton } from '@/components/posts/components/PostsLoadingSkeleton'
 import { PostType } from '@/controllers/posts'
 import { kyInstance } from '@/lib/ky'
 import { useInfiniteQuery } from '@tanstack/react-query'

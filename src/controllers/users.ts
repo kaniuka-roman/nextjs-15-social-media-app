@@ -1,43 +1,26 @@
+import { Prisma } from '@prisma/client'
 import prisma from '@/lib/prisma'
+import { getUserDataInclude } from './queries'
 
-export type UserData = Awaited<ReturnType<typeof getUser>>
+export type UserData = NonNullable<Awaited<ReturnType<typeof getUser>>>
 
-export const getUserFollowers = async (id: string) => {
+export const getUserFollowers = async (userId: string) => {
    return await prisma.user.findMany({
       where: {
          NOT: {
-            id,
+            id: userId,
          },
          followers: {
             none: {
-               followerId: id,
+               followerId: userId,
             },
          },
       },
-      select: {
-         id: true,
-         avatarUrl: true,
-         displayName: true,
-         username: true,
-         followers: {
-            where: {
-               followerId: id,
-            },
-            select: {
-               followerId: true,
-            },
-         },
-         _count: {
-            select: {
-               followers: true,
-            },
-         },
-      },
+      include: getUserDataInclude(userId),
       take: 5,
    })
 }
 export const getUser = async (username: string, userId: string) => {
-   console.log('getUser ~ username:', username)
    return await prisma.user.findFirst({
       where: {
          username: {
@@ -45,27 +28,15 @@ export const getUser = async (username: string, userId: string) => {
             mode: 'insensitive',
          },
       },
-      select: {
-         id: true,
-         avatarUrl: true,
-         displayName: true,
-         username: true,
-         bio: true,
-         createdAt: true,
-         followers: {
-            where: {
-               followerId: userId,
-            },
-            select: {
-               followerId: true,
-            },
-         },
-         _count: {
-            select: {
-               posts: true,
-               followers: true,
-            },
-         },
+      include: getUserDataInclude(userId),
+   })
+}
+export const updateUserProfileData = async ({ userId, data }: { userId: string; data: Prisma.UserUpdateInput }) => {
+   return await prisma.user.update({
+      where: {
+         id: userId,
       },
+      data,
+      include: getUserDataInclude(userId),
    })
 }

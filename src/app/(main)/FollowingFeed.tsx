@@ -1,8 +1,8 @@
 'use client'
 
-import { InfiniteScrollContainer } from '@/components/InfiniteScrollConainer'
+import { InfiniteScrollContainer } from '@/components/InfiniteScrollContainer'
+import { PostsLoadingSkeleton } from '@/components/posts/components/PostsLoadingSkeleton'
 import { Post } from '@/components/posts/Post'
-import { PostsLoadingSkeleton } from '@/components/posts/PostsLoadingSkeleton'
 import { PostType } from '@/controllers/posts'
 import { kyInstance } from '@/lib/ky'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -30,7 +30,7 @@ export const FollowingFeed = () => {
       )
    }
    if (status === 'error') {
-      return <p className="text-center text-destructive">An error occured while loading posts</p>
+      return <p className="text-center text-destructive">An error occurred while loading posts</p>
    }
 
    return (

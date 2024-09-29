@@ -1,14 +1,14 @@
 import { FollowButton } from '@/components/FollowButton'
 import { FollowerCount } from '@/components/FollowerCount'
-import { Button } from '@/components/ui/button'
 import { UserAvatar } from '@/components/UserAvatar'
 import { UserData } from '@/controllers/users'
 import { FollowerInfo } from '@/lib/types'
 import { formatNumber } from '@/lib/utils'
 import { formatDate } from 'date-fns'
+import { EditProfileButton } from './EditProfileButton'
 
 export type UserProfileProps = {
-   user: NonNullable<UserData>
+   user: UserData
    loggedInUserId: string
 }
 
@@ -35,7 +35,7 @@ export const UserProfile = ({ loggedInUserId, user }: UserProfileProps) => {
                </div>
             </div>
             {user.id === loggedInUserId ? (
-               <Button>Edit profile</Button>
+               <EditProfileButton user={user} />
             ) : (
                <FollowButton userId={user.id} initialState={followerInfo} />
             )}
