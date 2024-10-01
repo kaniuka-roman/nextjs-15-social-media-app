@@ -1,6 +1,5 @@
 import { validateRequest } from '@/auth'
 import { getUser } from '@/controllers/users'
-import prisma from '@/lib/prisma'
 
 export const GET = async (req: Request, { params: { username } }: { params: { username: string } }) => {
    try {

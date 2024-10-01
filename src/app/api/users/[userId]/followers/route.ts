@@ -1,32 +1,17 @@
 import { validateRequest } from '@/auth'
+import { getUserFollowersStats } from '@/controllers/users'
 import prisma from '@/lib/prisma'
 import { FollowerInfo } from '@/lib/types'
 
 export const GET = async (req: Request, { params: { userId } }: { params: { userId: string } }) => {
    try {
-      const { user: loggedUser } = await validateRequest()
+      const { user: loggedInUser } = await validateRequest()
 
-      if (!loggedUser) {
+      if (!loggedInUser) {
          return Response.json({ error: 'Unauthorized' }, { status: 401 })
       }
-      const user = await prisma.user.findUnique({
-         where: { id: userId },
-         select: {
-            followers: {
-               where: {
-                  followerId: loggedUser.id,
-               },
-               select: {
-                  followerId: true,
-               },
-            },
-            _count: {
-               select: {
-                  followers: true,
-               },
-            },
-         },
-      })
+      const user = await getUserFollowersStats({ userId, loggedInUser: loggedInUser.id })
+
       if (!user) {
          return Response.json({ error: 'User not found' }, { status: 404 })
       }

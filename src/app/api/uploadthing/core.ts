@@ -1,4 +1,5 @@
 import { validateRequest } from '@/auth'
+import { updateUserProfileData } from '@/controllers/users'
 import prisma from '@/lib/prisma'
 import { createUploadthing, FileRouter } from 'uploadthing/next'
 import { UploadThingError, UTApi } from 'uploadthing/server'
@@ -23,8 +24,8 @@ export const fileRouter = {
             await new UTApi().deleteFiles(key)
          }
          const newAvatarUrl = file.url.replace('/f', `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}`)
-         await prisma.user.update({
-            where: { id: metadata.user.id },
+         await updateUserProfileData({
+            userId: metadata.user.id,
             data: {
                avatarUrl: newAvatarUrl,
             },

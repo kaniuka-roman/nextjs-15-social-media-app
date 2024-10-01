@@ -8,6 +8,7 @@ import { PostMoreButton } from './components/PostMoreButton'
 import { Linkify } from '../Linkify'
 import { UserTooltip } from '../UserTooltip'
 import { MediaPreviews } from './components/MediaPreviews'
+import { LikeButton } from './components/LikeButton'
 
 type PostProps = {
    post: PostType
@@ -48,6 +49,8 @@ export const Post = ({ post }: PostProps) => {
             <div className="whitespace-pre-line break-words">{post.content}</div>
          </Linkify>
          {!!post.attachments.length && <MediaPreviews attachments={post.attachments} />}
+         <hr className="text-muted-foreground" />
+         <LikeButton postId={post.id} initialState={{ likes: post._count.likes, isLikedByUser: !!post.likes.length }} />
       </article>
    )
 }

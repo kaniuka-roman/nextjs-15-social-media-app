@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import { getPostUserDataInclude } from './queries'
+import { getPostDataInclude } from './queries'
 export type PostType = Awaited<ReturnType<typeof getPosts>>[number]
 export type GetSinglePost = { postId: string; userId: string }
 type GetPostsParams = {
@@ -19,7 +19,7 @@ type CreateNewPostParams = {
 export const getPosts = async (params: GetPostsParams) => {
    const posts = await prisma.post.findMany({
       orderBy: { createdAt: 'desc' },
-      include: getPostUserDataInclude(params.userId),
+      include: getPostDataInclude(params.userId),
       take: params?.pageSize ?? undefined,
       skip: params?.cursor ? 1 : 0,
       cursor: params?.cursor ? { id: params?.cursor } : undefined,
@@ -30,7 +30,7 @@ export const getUserPosts = async (params: GetUserPosts) => {
    const posts = await prisma.post.findMany({
       where: { userId: params.userId },
       orderBy: { createdAt: 'desc' },
-      include: getPostUserDataInclude(params.userId),
+      include: getPostDataInclude(params.userId),
       take: params?.pageSize ?? undefined,
       skip: params?.cursor ? 1 : 0,
       cursor: params?.cursor ? { id: params?.cursor } : undefined,
@@ -48,7 +48,7 @@ export const getPostsFollowedUsers = async (params: GetPostsFollowedUsersParams)
             },
          },
       },
-      include: getPostUserDataInclude(params.userId),
+      include: getPostDataInclude(params.userId),
       orderBy: { createdAt: 'desc' },
       take: params.pageSize ?? undefined,
       skip: params.cursor ? 1 : 0,
@@ -61,7 +61,7 @@ export const getSinglePost = async ({ postId, userId }: GetSinglePost) => {
       where: {
          id: postId,
       },
-      include: getPostUserDataInclude(userId),
+      include: getPostDataInclude(userId),
    })
    return post
 }
@@ -75,7 +75,7 @@ export const createNewPost = async ({ content, userId, mediaIds }: CreateNewPost
             connect: mediaIds.map((id) => ({ id })),
          },
       },
-      include: getPostUserDataInclude(userId),
+      include: getPostDataInclude(userId),
    })
 }
 export const deletePost = async ({ id }: { id: string }) => {
@@ -83,6 +83,50 @@ export const deletePost = async ({ id }: { id: string }) => {
       where: { id },
       select: {
          id: true,
+      },
+   })
+}
+
+export const getPostLikes = async ({ postId, userId }: GetSinglePost) => {
+   return await prisma.post.findUnique({
+      where: { id: postId },
+      select: {
+         likes: {
+            where: {
+               userId,
+            },
+            select: {
+               userId: true,
+            },
+         },
+         _count: {
+            select: {
+               likes: true,
+            },
+         },
+      },
+   })
+}
+export const likePost = async ({ postId, userId }: { postId: string; userId: string }) => {
+   return await prisma.like.upsert({
+      where: {
+         userId_postId: {
+            userId,
+            postId,
+         },
+      },
+      create: {
+         userId,
+         postId,
+      },
+      update: {},
+   })
+}
+export const unlikePost = async ({ postId, userId }: { postId: string; userId: string }) => {
+   return await prisma.like.deleteMany({
+      where: {
+         postId,
+         userId,
       },
    })
 }

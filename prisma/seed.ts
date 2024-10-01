@@ -22,6 +22,7 @@ async function main() {
    await prisma.post.deleteMany({})
    await prisma.follow.deleteMany({})
    await prisma.session.deleteMany({})
+   await prisma.like.deleteMany({})
 
    const usersArr = data.map(async ({ email, password, username, displayName }) => {
       const passwordHash = await hash(password, {
@@ -49,10 +50,10 @@ async function main() {
          where: { id: user.id },
          data: {
             bio: faker.person.bio(),
-            avatarUrl: faker.image.urlLoremFlickr({ width: 200, height: 200, category: 'avatar' }),
+            avatarUrl: faker.image.urlLoremFlickr({ width: 200, height: 200, category: 'profile_photo' }),
             posts: {
                createMany: {
-                  data: Array.from({ length: faker.number.int({ min: 10, max: 100 }) }).map(() => ({
+                  data: Array.from({ length: faker.number.int({ min: 10, max: 50 }) }).map(() => ({
                      content: faker.lorem.paragraph({ min: 1, max: 6 }),
                   })),
                },
