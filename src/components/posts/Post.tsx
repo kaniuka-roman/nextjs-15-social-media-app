@@ -9,12 +9,14 @@ import { Linkify } from '../Linkify'
 import { UserTooltip } from '../UserTooltip'
 import { MediaPreviews } from './components/MediaPreviews'
 import { LikeButton } from './components/LikeButton'
+import { BookmarkButton } from './components/BookmarkButton'
 
 type PostProps = {
    post: PostType
 }
 
 export const Post = ({ post }: PostProps) => {
+   console.log('Post ~ post:', post)
    const { user } = useSession()
 
    return (
@@ -50,7 +52,13 @@ export const Post = ({ post }: PostProps) => {
          </Linkify>
          {!!post.attachments.length && <MediaPreviews attachments={post.attachments} />}
          <hr className="text-muted-foreground" />
-         <LikeButton postId={post.id} initialState={{ likes: post._count.likes, isLikedByUser: !!post.likes.length }} />
+         <div className="flex justify-between gap-5">
+            <LikeButton
+               postId={post.id}
+               initialState={{ likes: post._count.likes, isLikedByUser: !!post.likes.length }}
+            />
+            <BookmarkButton postId={post.id} initialState={{ isBookmarkedByUser: !!post.bookmarks.length }} />
+         </div>
       </article>
    )
 }

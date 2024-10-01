@@ -18,8 +18,8 @@ type CreateNewPostParams = {
 
 export const getPosts = async (params: GetPostsParams) => {
    const posts = await prisma.post.findMany({
-      orderBy: { createdAt: 'desc' },
       include: getPostDataInclude(params.userId),
+      orderBy: { createdAt: 'desc' },
       take: params?.pageSize ?? undefined,
       skip: params?.cursor ? 1 : 0,
       cursor: params?.cursor ? { id: params?.cursor } : undefined,

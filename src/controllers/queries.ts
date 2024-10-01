@@ -45,6 +45,14 @@ export const getPostDataInclude = (userId: string) =>
             userId: true,
          },
       },
+      bookmarks: {
+         where: {
+            userId,
+         },
+         select: {
+            userId: true,
+         },
+      },
       _count: {
          select: {
             likes: true,

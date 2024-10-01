@@ -6,3 +6,6 @@ export type LikeInfo = {
    likes: number
    isLikedByUser: boolean
 }
+export type BookmarkInfo = {
+   isBookmarkedByUser: boolean
+}
