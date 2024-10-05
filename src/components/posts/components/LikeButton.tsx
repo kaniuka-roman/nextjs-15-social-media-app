@@ -44,10 +44,10 @@ export const LikeButton = ({ postId, initialState }: LikeButtonProps) => {
       },
    })
    return (
-      <button onClick={() => mutate()} className="flex items-center gap-2">
+      <button onClick={() => mutate()} className='flex items-center gap-2'>
          <Heart className={cn('size-5', { 'fill-red-500 text-red-500': data.isLikedByUser })} />
-         <span className="text-sm font-medium tabular-nums">
-            {data.likes} <span className="hidden sm:inline">{data.likes !== 1 ? 'likes' : 'like'}</span>
+         <span className='text-sm font-medium tabular-nums'>
+            {data.likes} <span className='hidden sm:inline'>{data.likes !== 1 ? 'likes' : 'like'}</span>
          </span>
       </button>
    )

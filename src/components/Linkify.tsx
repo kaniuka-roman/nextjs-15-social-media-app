@@ -18,7 +18,7 @@ export const Linkify = ({ children }: LinkifyProps) => {
 }
 
 const LinkifyUrl = ({ children }: LinkifyProps) => (
-   <LinkItUrl className="text-primary hover:underline">{children}</LinkItUrl>
+   <LinkItUrl className='text-primary hover:underline'>{children}</LinkItUrl>
 )
 
 const LinkifyUsername = ({ children }: LinkifyProps) => (
@@ -38,7 +38,7 @@ const LinkifyHashtag = ({ children }: LinkifyProps) => (
    <LinkIt
       regex={/(#[a-zA-Z0-9]+)/}
       component={(match, key) => (
-         <Link key={key} href={`/hashtag/${match.slice(1)}`} className="text-primary hover:underline">
+         <Link key={key} href={`/hashtag/${match.slice(1)}`} className='text-primary hover:underline'>
             {match}
          </Link>
       )}

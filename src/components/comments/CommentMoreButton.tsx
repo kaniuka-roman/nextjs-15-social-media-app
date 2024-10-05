@@ -1,17 +1,17 @@
-import { PostType } from '@/controllers/posts'
+import { CommentData } from '@/controllers/comments'
 import { useState } from 'react'
-import { DeletePostDialog } from './DeletePostDialog'
+import { DeleteCommentDialog } from './DeleteCommentDialog'
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu'
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../../ui/dropdown-menu'
-import { Button } from '../../ui/button'
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { Button } from '../ui/button'
 import { MoreHorizontal, Trash2 } from 'lucide-react'
 
 export type PostMoreButtonProps = {
-   post: PostType
+   comment: CommentData
    className?: string
 }
 
-export const PostMoreButton = ({ post, className }: PostMoreButtonProps) => {
+export const CommentMoreButton = ({ comment, className }: PostMoreButtonProps) => {
    const [showDeleteDialog, setShowDeleteDialog] = useState(false)
    return (
       <>
@@ -30,7 +30,7 @@ export const PostMoreButton = ({ post, className }: PostMoreButtonProps) => {
                </DropdownMenuItem>
             </DropdownMenuContent>
          </DropdownMenu>
-         <DeletePostDialog post={post} open={showDeleteDialog} onClose={() => setShowDeleteDialog(false)} />
+         <DeleteCommentDialog comment={comment} open={showDeleteDialog} onClose={() => setShowDeleteDialog(false)} />
       </>
    )
 }

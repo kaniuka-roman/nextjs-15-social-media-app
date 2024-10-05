@@ -50,7 +50,7 @@ export const EditProfileDialog = ({ user, open, onOpenChange }: EditProfileDialo
             <DialogHeader>
                <DialogTitle>Edit profile</DialogTitle>
             </DialogHeader>
-            <div className="space-y-1.5">
+            <div className='space-y-1.5'>
                <Label>Avatar</Label>
                <AvatarInput
                   src={croppedAvatar ? URL.createObjectURL(croppedAvatar) : user.avatarUrl}
@@ -58,15 +58,15 @@ export const EditProfileDialog = ({ user, open, onOpenChange }: EditProfileDialo
                />
             </div>
             <Form {...form}>
-               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+               <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
                   <FormField
                      control={form.control}
-                     name="displayName"
+                     name='displayName'
                      render={({ field }) => (
                         <FormItem>
                            <FormLabel>Display name</FormLabel>
                            <FormControl>
-                              <Input placeholder="Your display name" {...field} />
+                              <Input placeholder='Your display name' {...field} />
                            </FormControl>
                            <FormMessage />
                         </FormItem>
@@ -74,14 +74,14 @@ export const EditProfileDialog = ({ user, open, onOpenChange }: EditProfileDialo
                   />
                   <FormField
                      control={form.control}
-                     name="bio"
+                     name='bio'
                      render={({ field }) => (
                         <FormItem>
                            <FormLabel>Bio</FormLabel>
                            <FormControl>
                               <Textarea
-                                 className="resize-none"
-                                 placeholder="Tell us a little bit about yourself"
+                                 className='resize-none'
+                                 placeholder='Tell us a little bit about yourself'
                                  {...field}
                               />
                            </FormControl>
@@ -91,7 +91,7 @@ export const EditProfileDialog = ({ user, open, onOpenChange }: EditProfileDialo
                   />
                   <DialogFooter>
                      <LoadingButton
-                        type="submit"
+                        type='submit'
                         // disabled={!form.formState.isDirty || !croppedAvatar}
                         loading={mutation.isPending}
                      >
@@ -121,29 +121,29 @@ export const AvatarInput = ({ src, onImageCropped }: AvatarInputProps) => {
       <>
          <input
             ref={fileInputRef}
-            type="file"
-            accept="image/*"
+            type='file'
+            accept='image/*'
             onChange={(e) => onImageSelected(e.target.files?.[0])}
-            className="hidden sr-only"
+            className='sr-only hidden'
          />
-         <button type="button" onClick={() => fileInputRef.current?.click()} className="group relative block">
+         <button type='button' onClick={() => fileInputRef.current?.click()} className='group relative block'>
             {src ? (
                <Image
                   src={src}
-                  alt="avatar preview"
+                  alt='avatar preview'
                   width={150}
                   height={150}
-                  className="size-32 flex-none rounded-full object-cover"
+                  className='size-32 flex-none rounded-full object-cover'
                />
             ) : (
                <User
-                  className="aspect-square h-fit flex-none rounded-full bg-secondary object-cover"
+                  className='aspect-square h-fit flex-none rounded-full bg-secondary object-cover'
                   strokeWidth={1}
                   width={150}
                   height={150}
                />
             )}
-            <span className="absolute inset-0 m-auto flex size-12 items-center justify-center rounded-full bg-black bg-opacity-30 text-white trnsition-colors duration-200 group-hover:bg-opacity-25">
+            <span className='trnsition-colors absolute inset-0 m-auto flex size-12 items-center justify-center rounded-full bg-black bg-opacity-30 text-white duration-200 group-hover:bg-opacity-25'>
                <Camera size={24} />
             </span>
          </button>

@@ -31,7 +31,7 @@ export const CropImageDialog = ({ src, cropAspectRatio, onCropped, onClose }: Cr
                zoomable={false}
                guides={false}
                ref={cropperRef}
-               className="mx-auto size-fit"
+               className='mx-auto size-fit'
             />
             <DialogFooter>
                <Button variant={'secondary'} onClick={onClose}>

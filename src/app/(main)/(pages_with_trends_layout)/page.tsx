@@ -5,18 +5,18 @@ import { FollowingFeed } from '../FollowingFeed'
 
 export default function Home() {
    return (
-      <main className="min-w-0 w-full">
-         <div className="w-full min-w-0 space-y-5">
+      <main className='w-full min-w-0'>
+         <div className='w-full min-w-0 space-y-5'>
             <PostEditor />
-            <Tabs defaultValue="for-you">
+            <Tabs defaultValue='for-you'>
                <TabsList>
-                  <TabsTrigger value="for-you">For you</TabsTrigger>
-                  <TabsTrigger value="following">Following</TabsTrigger>
+                  <TabsTrigger value='for-you'>For you</TabsTrigger>
+                  <TabsTrigger value='following'>Following</TabsTrigger>
                </TabsList>
-               <TabsContent value="for-you">
+               <TabsContent value='for-you'>
                   <ForYouFeed />
                </TabsContent>
-               <TabsContent value="following">
+               <TabsContent value='following'>
                   <FollowingFeed />
                </TabsContent>
             </Tabs>

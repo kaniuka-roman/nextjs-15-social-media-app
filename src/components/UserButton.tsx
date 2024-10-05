@@ -58,14 +58,14 @@ export const UserButton = ({ className }: UserButtonProps) => {
             <DropdownMenuLabel>Logged in as@{user.username}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <Link href={`/users/${user.username}`}>
-               <DropdownMenuItem className="cursor-pointer">
-                  <UserIcon className="mr-2 size-4" />
+               <DropdownMenuItem className='cursor-pointer'>
+                  <UserIcon className='mr-2 size-4' />
                   Profie
                </DropdownMenuItem>
             </Link>
             <DropdownMenuSub>
-               <DropdownMenuSubTrigger className="cursor-pointer">
-                  <Monitor className="mr-2 size-4" />
+               <DropdownMenuSubTrigger className='cursor-pointer'>
+                  <Monitor className='mr-2 size-4' />
                   Theme
                </DropdownMenuSubTrigger>
                <DropdownMenuPortal>
@@ -75,13 +75,13 @@ export const UserButton = ({ className }: UserButtonProps) => {
                         return (
                            <DropdownMenuItem
                               key={name}
-                              className="cursor-pointer min-w-max"
+                              className='min-w-max cursor-pointer'
                               onClick={() => setTheme(name)}
                            >
-                              <Icon className="mr-2 size-4" />
+                              <Icon className='mr-2 size-4' />
                               {text}
-                              <div className="h-4 ml-auto pl-2 min-w-6">
-                                 {theme === name && <Check className="size-4" />}
+                              <div className='ml-auto h-4 min-w-6 pl-2'>
+                                 {theme === name && <Check className='size-4' />}
                               </div>
                            </DropdownMenuItem>
                         )
@@ -91,13 +91,13 @@ export const UserButton = ({ className }: UserButtonProps) => {
             </DropdownMenuSub>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-               className="cursor-pointer"
+               className='cursor-pointer'
                onClick={() => {
                   queryClient.clear()
                   logout()
                }}
             >
-               <LogOutIcon className="mr-2 size-4" />
+               <LogOutIcon className='mr-2 size-4' />
                Logout
             </DropdownMenuItem>
          </DropdownMenuContent>

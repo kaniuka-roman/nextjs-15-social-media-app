@@ -31,13 +31,13 @@ export default function RootLayout({
    children: React.ReactNode
 }>) {
    return (
-      <html lang="en">
+      <html lang='en'>
          <body className={`${geistSans.variable} ${geistMono.variable}`}>
             <NextSSRPlugin routerConfig={extractRouterConfig(fileRouter)} />
             <QueryProvider>
                <ThemeProvider
-                  attribute="class"
-                  defaultTheme="system"
+                  attribute='class'
+                  defaultTheme='system'
                   enableSystem
                   disableTransitionOnChange
                   themes={['light', 'dark', 'system']}

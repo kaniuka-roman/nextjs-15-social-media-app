@@ -27,13 +27,13 @@ export const UserLinkWithTooltip = ({ children, username }: UserLinkWithTooltipP
    })
    if (!data)
       return (
-         <Link href={`/users/${username}`} className="text-primary hover:underline">
+         <Link href={`/users/${username}`} className='text-primary hover:underline'>
             {children}
          </Link>
       )
    return (
       <UserTooltip user={data}>
-         <Link href={`/users/${username}`} className="text-primary hover:underline">
+         <Link href={`/users/${username}`} className='text-primary hover:underline'>
             {children}
          </Link>
       </UserTooltip>

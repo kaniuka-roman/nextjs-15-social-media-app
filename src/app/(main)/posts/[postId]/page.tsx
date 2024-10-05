@@ -27,15 +27,15 @@ export const generateMetadata = async ({ params: { postId } }: PageProps) => {
 
 export default async function Page({ params: { postId } }: PageProps) {
    const { user } = await validateRequest()
-   if (!user) return <p className="text-destructive">{"You're not authorized to view this page"}</p>
+   if (!user) return <p className='text-destructive'>{"You're not authorized to view this page"}</p>
    const post = await getPost({ postId, userId: user.id })
    return (
-      <main className="flex w-full min-w-0 gap-5">
-         <div className="w-full min-w-0 space-y-5">
+      <main className='flex w-full min-w-0 gap-5'>
+         <div className='w-full min-w-0 space-y-5'>
             <Post post={post} />
          </div>
-         <div className="sticky top-[5.25rem] hidden lg:block h-fit w-80 flex-none">
-            <Suspense fallback={<Loader2 className="mx-auto animate-spin" />}>
+         <div className='sticky top-[5.25rem] hidden h-fit w-80 flex-none lg:block'>
+            <Suspense fallback={<Loader2 className='mx-auto animate-spin' />}>
                <UserInfoSidebar user={post.user} />
             </Suspense>
          </div>

@@ -60,13 +60,13 @@ export const PostEditor = () => {
    }
 
    return (
-      <div className="flex flex-col gap-5 p-5 shadow-sm rounded-2xl bg-card">
-         <div className="flex gap-5">
-            <UserAvatar avatarUrl={user.avatarUrl} className="hidden sm:inline" />
-            <div {...rootProps} className="w-full">
+      <div className='flex flex-col gap-5 rounded-2xl bg-card p-5 shadow-sm'>
+         <div className='flex gap-5'>
+            <UserAvatar avatarUrl={user.avatarUrl} className='hidden sm:inline' />
+            <div {...rootProps} className='w-full'>
                <EditorContent
                   editor={editor}
-                  className={cn('w-full max-h-[20rem] overflow-y-auto bg-background rounded-xl px-5 py-3', {
+                  className={cn('max-h-[20rem] w-full overflow-y-auto rounded-xl bg-background px-5 py-3', {
                      'outline-dashed': isDragActive,
                   })}
                   onPaste={onPaste}
@@ -75,15 +75,15 @@ export const PostEditor = () => {
             </div>
          </div>
          {!!attachments.length && <AttachmentPreviews attachments={attachments} removeAttachment={removeAttachment} />}
-         <div className="flex justify-end">
+         <div className='flex justify-end'>
             {isUploading && (
                <>
-                  <span className="text-sm">{uploadProgress ?? 0}%</span>
-                  <Loader2 className="size-5 animate-spin text-primary" />
+                  <span className='text-sm'>{uploadProgress ?? 0}%</span>
+                  <Loader2 className='size-5 animate-spin text-primary' />
                </>
             )}
             <AddAttachmentsButton onFilesSelected={startUpload} disabled={isUploading || attachments.length >= 5} />
-            <LoadingButton loading={mutation.isPending} onClick={onSubmit} disabled={isUploading} className="min-w-20">
+            <LoadingButton loading={mutation.isPending} onClick={onSubmit} disabled={isUploading} className='min-w-20'>
                Post
             </LoadingButton>
          </div>

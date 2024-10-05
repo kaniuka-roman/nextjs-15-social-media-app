@@ -14,18 +14,18 @@ export const AddAttachmentsButton = ({ disabled, onFilesSelected }: AddAttachmen
          <Button
             variant={'ghost'}
             size={'icon'}
-            className="text-primary hover:text-primary"
+            className='text-primary hover:text-primary'
             disabled={disabled}
             onClick={() => fileInputRef.current?.click()}
          >
             <ImageIcon size={20} />
          </Button>
          <input
-            type="file"
-            accept="image/*, video/*"
+            type='file'
+            accept='image/*, video/*'
             multiple
             ref={fileInputRef}
-            className="hidden sr-only"
+            className='sr-only hidden'
             onChange={(e) => {
                const files = Array.from(e.target.files || [])
                if (files.length) {

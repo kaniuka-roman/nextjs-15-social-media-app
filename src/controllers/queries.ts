@@ -1,3 +1,4 @@
+import prisma from '@/lib/prisma'
 import { Prisma } from '@prisma/client'
 
 export const getUserDataInclude = (id: string) => ({
@@ -56,6 +57,15 @@ export const getPostDataInclude = (userId: string) =>
       _count: {
          select: {
             likes: true,
+            comments: true,
          },
       },
    }) satisfies Prisma.PostInclude
+
+export const getCommentDataInclude = (loggedInUserId: string) => {
+   return {
+      user: {
+         include: getUserDataInclude(loggedInUserId),
+      },
+   } satisfies Prisma.CommentInclude
+}

@@ -1,17 +1,18 @@
+import { CommentData } from '@/controllers/comments'
 import { PostType } from '@/controllers/posts'
-import { useDeletePostMutation } from '../mutations'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../ui/dialog'
-import { LoadingButton } from '../../LoadingButton'
-import { Button } from '../../ui/button'
+import { useDeleteCommentMutation } from './mutations'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog'
+import { LoadingButton } from '../LoadingButton'
+import { Button } from '../ui/button'
 
-export type DeletePostDialogProps = {
-   post: PostType
+export type DeleteCommentDialogProps = {
+   comment: CommentData
    open: boolean
    onClose: () => void
 }
 
-export const DeletePostDialog = ({ onClose, open, post }: DeletePostDialogProps) => {
-   const mutation = useDeletePostMutation()
+export const DeleteCommentDialog = ({ onClose, open, comment }: DeleteCommentDialogProps) => {
+   const mutation = useDeleteCommentMutation()
    const handleOpenChange = (open: boolean) => {
       if (!open || !mutation.isPending) onClose()
    }
@@ -19,16 +20,16 @@ export const DeletePostDialog = ({ onClose, open, post }: DeletePostDialogProps)
       <Dialog open={open} onOpenChange={handleOpenChange}>
          <DialogContent>
             <DialogHeader>
-               <DialogTitle>Delete post?</DialogTitle>
+               <DialogTitle>Delete comment?</DialogTitle>
                <DialogDescription>
-                  Are u sure you want delete this post? This action cannot been undone.
+                  Are you sure you want delete this comment? This action cannot been undone.
                </DialogDescription>
             </DialogHeader>
             <DialogFooter>
                <LoadingButton
                   loading={mutation.isPending}
                   variant='destructive'
-                  onClick={() => mutation.mutate(post.id, { onSuccess: onClose })}
+                  onClick={() => mutation.mutate(comment.id, { onSuccess: onClose })}
                >
                   Delete
                </LoadingButton>

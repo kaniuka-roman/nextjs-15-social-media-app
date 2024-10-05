@@ -23,21 +23,21 @@ export const Bookmarks = () => {
       return <PostsLoadingSkeleton />
    }
    if (status === 'success' && !bookmarks.length && !hasNextPage) {
-      return <p className="text-center text-muted-foreground">You don&apos;t have any bookmarks yet</p>
+      return <p className='text-center text-muted-foreground'>You don&apos;t have any bookmarks yet</p>
    }
    if (status === 'error') {
-      return <p className="text-center text-destructive">An error occurred while loading bookmarks</p>
+      return <p className='text-center text-destructive'>An error occurred while loading bookmarks</p>
    }
 
    return (
       <InfiniteScrollContainer
-         className="space-y-5"
+         className='space-y-5'
          onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
       >
          {bookmarks.map((bookmark) => (
             <Post key={bookmark.postId} post={bookmark.post} />
          ))}
-         {isFetchingNextPage && <Loader2 className="mx-auto animate-spin my-3" />}
+         {isFetchingNextPage && <Loader2 className='mx-auto my-3 animate-spin' />}
       </InfiniteScrollContainer>
    )
 }

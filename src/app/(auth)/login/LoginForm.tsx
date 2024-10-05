@@ -29,16 +29,16 @@ export const LoginForm = () => {
    }
    return (
       <Form {...form}>
-         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            {error && <p className="text-center text-destructive">{error}</p>}
+         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
+            {error && <p className='text-center text-destructive'>{error}</p>}
             <FormField
                control={form.control}
-               name="username"
+               name='username'
                render={({ field }) => (
                   <FormItem>
                      <FormLabel>Username</FormLabel>
                      <FormControl>
-                        <Input placeholder="Username" {...field} />
+                        <Input placeholder='Username' {...field} />
                      </FormControl>
                      <FormMessage />
                   </FormItem>
@@ -46,18 +46,18 @@ export const LoginForm = () => {
             />
             <FormField
                control={form.control}
-               name="password"
+               name='password'
                render={({ field }) => (
                   <FormItem>
                      <FormLabel>Password</FormLabel>
                      <FormControl>
-                        <PasswordInput placeholder="Password" {...field} />
+                        <PasswordInput placeholder='Password' {...field} />
                      </FormControl>
                      <FormMessage />
                   </FormItem>
                )}
             />
-            <LoadingButton type="submit" className="w-full" loading={isPending}>
+            <LoadingButton type='submit' className='w-full' loading={isPending}>
                Log in
             </LoadingButton>
          </form>

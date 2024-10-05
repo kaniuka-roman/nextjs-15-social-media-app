@@ -24,24 +24,24 @@ export const FollowingFeed = () => {
    }
    if (status === 'success' && !posts.length && !hasNextPage) {
       return (
-         <p className="text-center text-muted-foreground">
+         <p className='text-center text-muted-foreground'>
             No posts found. Start following people to see their posts here
          </p>
       )
    }
    if (status === 'error') {
-      return <p className="text-center text-destructive">An error occurred while loading posts</p>
+      return <p className='text-center text-destructive'>An error occurred while loading posts</p>
    }
 
    return (
       <InfiniteScrollContainer
-         className="space-y-5"
+         className='space-y-5'
          onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
       >
          {posts.map((post) => (
             <Post key={post.id} post={post} />
          ))}
-         {isFetchingNextPage && <Loader2 className="mx-auto animate-spin my-3" />}
+         {isFetchingNextPage && <Loader2 className='mx-auto my-3 animate-spin' />}
       </InfiniteScrollContainer>
    )
 }

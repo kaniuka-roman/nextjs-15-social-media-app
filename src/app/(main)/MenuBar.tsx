@@ -33,10 +33,16 @@ export const MenuBar = ({ className }: MenuBarProps) => {
          {menuItems.map(({ name, path, icon }) => {
             const Icon = icon
             return (
-               <Button key={name} variant={'ghost'} className="flex items-center justify-start gap-3" title={name} asChild>
+               <Button
+                  key={name}
+                  variant={'ghost'}
+                  className='flex items-center justify-start gap-3'
+                  title={name}
+                  asChild
+               >
                   <Link href={path}>
                      <Icon />
-                     <span className="hidden lg:inline">{name}</span>
+                     <span className='hidden lg:inline'>{name}</span>
                   </Link>
                </Button>
             )
