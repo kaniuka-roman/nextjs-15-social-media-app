@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma'
 import { getPostDataInclude } from './queries'
+import { PaginationParams } from './types'
 
 export type BookmarkParams = {
    userId: string
@@ -7,10 +8,8 @@ export type BookmarkParams = {
 }
 export type BookmarksData = Awaited<ReturnType<typeof getUserBookmarks>>[number]
 type GetBookmarksWithPaginationParams = {
-   pageSize: number
-   cursor: string | null
    userId: string
-}
+} & PaginationParams
 
 export const getBookmark = async ({ postId, userId }: BookmarkParams) => {
    return await prisma.bookmark.findUnique({

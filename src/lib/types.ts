@@ -9,3 +9,7 @@ export type LikeInfo = {
 export type BookmarkInfo = {
    isBookmarkedByUser: boolean
 }
+
+export type NotificationCountInfo = {
+   unreadCount: number
+}

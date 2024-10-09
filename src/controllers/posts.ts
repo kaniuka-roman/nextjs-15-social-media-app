@@ -1,11 +1,9 @@
 import prisma from '@/lib/prisma'
 import { getPostDataInclude } from './queries'
+import { PaginationParams } from './types'
 export type PostType = Awaited<ReturnType<typeof getPosts>>[number]
 export type GetSinglePost = { postId: string; userId: string }
-type GetPostsParams = {
-   pageSize: number
-   cursor: string | null
-} & UserId
+type GetPostsParams = PaginationParams & UserId
 type UserId = { userId: string }
 
 type GetUserPosts = Partial<GetPostsParams> & UserId
@@ -107,26 +105,65 @@ export const getPostLikes = async ({ postId, userId }: GetSinglePost) => {
       },
    })
 }
-export const likePost = async ({ postId, userId }: { postId: string; userId: string }) => {
-   return await prisma.like.upsert({
-      where: {
-         userId_postId: {
+export const likePost = async ({
+   postId,
+   userId,
+   postAuthorId,
+}: {
+   postId: string
+   userId: string
+   postAuthorId: string
+}) => {
+   return await prisma.$transaction([
+      prisma.like.upsert({
+         where: {
+            userId_postId: {
+               userId,
+               postId,
+            },
+         },
+         create: {
             userId,
             postId,
          },
-      },
-      create: {
-         userId,
-         postId,
-      },
-      update: {},
-   })
+         update: {},
+      }),
+      ...(userId !== postAuthorId
+         ? [
+              prisma.notification.create({
+                 data: { issuerId: userId, recipientId: postAuthorId, postId, type: 'LIKE' },
+              }),
+           ]
+         : []),
+   ])
 }
-export const unlikePost = async ({ postId, userId }: { postId: string; userId: string }) => {
-   return await prisma.like.deleteMany({
-      where: {
-         postId,
-         userId,
-      },
-   })
+export const unlikePost = async ({
+   postId,
+   userId,
+   postAuthorId,
+}: {
+   postId: string
+   userId: string
+   postAuthorId: string
+}) => {
+   return await prisma.$transaction([
+      prisma.like.deleteMany({
+         where: {
+            postId,
+            userId,
+         },
+      }),
+      ...(userId !== postAuthorId
+         ? [
+              prisma.notification.deleteMany({
+                 where: {
+                    issuerId: userId,
+                    recipientId: postAuthorId,
+                    postId,
+                    type: 'LIKE',
+                 },
+              }),
+           ]
+         : []),
+   ])
 }

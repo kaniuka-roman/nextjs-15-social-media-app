@@ -12,7 +12,12 @@ export const submitComment = async ({ post, content }: { post: PostType; content
    if (!user) throw new Error('Unauthorized')
    const { content: validatedContent } = createCommentSchema.parse({ content })
 
-   const newComment = await createComment({ content: validatedContent, authorId: user.id, postId: post.id })
+   const [newComment] = await createComment({
+      content: validatedContent,
+      authorId: user.id,
+      postId: post.id,
+      postAuthorId: post.userId,
+   })
    return newComment
 }
 

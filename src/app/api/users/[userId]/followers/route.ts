@@ -1,5 +1,5 @@
 import { validateRequest } from '@/auth'
-import { getUserFollowersStats } from '@/controllers/users'
+import { followUser, getUserFollowersStats, unfollowUser } from '@/controllers/users'
 import prisma from '@/lib/prisma'
 import { FollowerInfo } from '@/lib/types'
 
@@ -35,19 +35,7 @@ export const POST = async (req: Request, { params: { userId } }: { params: { use
       if (!loggedUser) {
          return Response.json({ error: 'Unauthorized' }, { status: 401 })
       }
-      await prisma.follow.upsert({
-         where: {
-            followerId_followingId: {
-               followerId: loggedUser.id,
-               followingId: userId,
-            },
-         },
-         create: {
-            followerId: loggedUser.id,
-            followingId: userId,
-         },
-         update: {},
-      })
+      await followUser({ followerId: loggedUser.id, followingId: userId })
       return new Response()
    } catch (error) {
       console.log('GET ~ error:', error)
@@ -62,12 +50,7 @@ export const DELETE = async (req: Request, { params: { userId } }: { params: { u
       if (!loggedUser) {
          return Response.json({ error: 'Unauthorized' }, { status: 401 })
       }
-      await prisma.follow.deleteMany({
-         where: {
-            followerId: loggedUser.id,
-            followingId: userId,
-         },
-      })
+      await unfollowUser({ followerId: loggedUser.id, followingId: userId })
       return new Response()
    } catch (error) {
       console.log('GET ~ error:', error)

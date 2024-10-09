@@ -1,22 +1,23 @@
 import prisma from '@/lib/prisma'
 import { Prisma } from '@prisma/client'
 
-export const getUserDataInclude = (id: string) => ({
-   followers: {
-      where: {
-         followerId: id,
+export const getUserDataInclude = (id: string) =>
+   ({
+      followers: {
+         where: {
+            followerId: id,
+         },
+         select: {
+            followerId: true,
+         },
       },
-      select: {
-         followerId: true,
+      _count: {
+         select: {
+            posts: true,
+            followers: true,
+         },
       },
-   },
-   _count: {
-      select: {
-         posts: true,
-         followers: true,
-      },
-   },
-})
+   }) satisfies Prisma.UserInclude
 export const getPostDataInclude = (userId: string) =>
    ({
       user: {
@@ -69,3 +70,18 @@ export const getCommentDataInclude = (loggedInUserId: string) => {
       },
    } satisfies Prisma.CommentInclude
 }
+
+export const getNotificationsInclude = {
+   issuer: {
+      select: {
+         username: true,
+         displayName: true,
+         avatarUrl: true,
+      },
+   },
+   post: {
+      select: {
+         content: true,
+      },
+   },
+} satisfies Prisma.NotificationInclude

@@ -1,36 +1,42 @@
 import { Button } from '@/components/ui/button'
-import { Bell, Bookmark, Home, Mail } from 'lucide-react'
+import { Bookmark, Home, Mail } from 'lucide-react'
 import Link from 'next/link'
+import { NotificationsButton } from './notifications/components/NotificationsButton'
+import { validateRequest } from '@/auth'
+import { getUnreadNotificationsCount } from '@/controllers/notifications'
 
 type MenuBarProps = {
    className?: string
 }
-const menuItems = [
-   {
-      name: 'Home',
-      path: '/',
-      icon: Home,
-   },
-   {
-      name: 'Notifications',
-      path: '/notifications',
-      icon: Bell,
-   },
-   {
-      name: 'Messages',
-      path: '/messages',
-      icon: Mail,
-   },
-   {
-      name: 'Bookmarks',
-      path: '/bookmarks',
-      icon: Bookmark,
-   },
-]
-export const MenuBar = ({ className }: MenuBarProps) => {
+export const MenuBar = async ({ className }: MenuBarProps) => {
+   const { user } = await validateRequest()
+   if (!user) return null
+   const unreadNotificationsCount = await getUnreadNotificationsCount({ recipientId: user.id })
+
+   const menuItems = [
+      {
+         name: 'Home',
+         path: '/',
+         icon: Home,
+      },
+      {
+         component: <NotificationsButton initialState={{ unreadCount: unreadNotificationsCount }} />,
+      },
+      {
+         name: 'Messages',
+         path: '/messages',
+         icon: Mail,
+      },
+      {
+         name: 'Bookmarks',
+         path: '/bookmarks',
+         icon: Bookmark,
+      },
+   ]
    return (
       <div className={className}>
-         {menuItems.map(({ name, path, icon }) => {
+         {menuItems.map(({ name, path, icon, component }) => {
+            if (component) return component
             const Icon = icon
             return (
                <Button

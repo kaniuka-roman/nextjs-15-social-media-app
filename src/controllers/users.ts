@@ -79,3 +79,42 @@ export const updateUserProfileData = async ({ userId, data }: { userId: string; 
       include: getUserDataInclude(userId),
    })
 }
+
+export const followUser = async ({ followerId, followingId }: { followerId: string; followingId: string }) => {
+   return await prisma.$transaction([
+      prisma.follow.upsert({
+         where: {
+            followerId_followingId: {
+               followerId,
+               followingId,
+            },
+         },
+         create: {
+            followerId,
+            followingId,
+         },
+         update: {},
+      }),
+      prisma.notification.create({
+         data: {
+            issuerId: followerId,
+            recipientId: followingId,
+            type: 'FOLLOW',
+         },
+      }),
+   ])
+}
+
+export const unfollowUser = async ({ followerId, followingId }: { followerId: string; followingId: string }) => {
+   return await prisma.$transaction([
+      prisma.follow.deleteMany({
+         where: {
+            followerId,
+            followingId,
+         },
+      }),
+      prisma.notification.deleteMany({
+         where: { issuerId: followerId, recipientId: followingId, type: 'FOLLOW' },
+      }),
+   ])
+}

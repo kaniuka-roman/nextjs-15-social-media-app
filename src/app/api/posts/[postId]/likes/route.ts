@@ -1,5 +1,6 @@
 import { validateRequest } from '@/auth'
 import { getPostLikes, likePost, unlikePost } from '@/controllers/posts'
+import prisma from '@/lib/prisma'
 import { LikeInfo } from '@/lib/types'
 
 export const GET = async (req: Request, { params: { postId } }: { params: { postId: string } }) => {
@@ -31,7 +32,14 @@ export const POST = async (req: Request, { params: { postId } }: { params: { pos
       if (!loggedInUser) {
          return Response.json({ error: 'Unauthorized' }, { status: 401 })
       }
-      await likePost({ postId, userId: loggedInUser.id })
+      const post = await prisma.post.findUnique({
+         where: { id: postId },
+         select: {
+            userId: true,
+         },
+      })
+      if (!post) return Response.json({ error: 'Post not found' }, { status: 404 })
+      await likePost({ userId: loggedInUser.id, postId, postAuthorId: post.userId })
 
       return new Response()
    } catch (error) {
@@ -46,7 +54,14 @@ export const DELETE = async (req: Request, { params: { postId } }: { params: { p
       if (!loggedInUser) {
          return Response.json({ error: 'Unauthorized' }, { status: 401 })
       }
-      await unlikePost({ postId, userId: loggedInUser.id })
+      const post = await prisma.post.findUnique({
+         where: { id: postId },
+         select: {
+            userId: true,
+         },
+      })
+      if (!post) return Response.json({ error: 'Post not found' }, { status: 404 })
+      await unlikePost({ userId: loggedInUser.id, postId, postAuthorId: post.userId })
 
       return new Response()
    } catch (error) {
