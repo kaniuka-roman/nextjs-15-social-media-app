@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { NotificationsButton } from './notifications/components/NotificationsButton'
 import { validateRequest } from '@/auth'
 import { getUnreadNotificationsCount } from '@/controllers/notifications'
+import { MessagesButton } from './messages/components/MessagesButton'
+import streamServerClient from '@/lib/stream'
 
 type MenuBarProps = {
    className?: string
@@ -11,7 +13,10 @@ type MenuBarProps = {
 export const MenuBar = async ({ className }: MenuBarProps) => {
    const { user } = await validateRequest()
    if (!user) return null
-   const unreadNotificationsCount = await getUnreadNotificationsCount({ recipientId: user.id })
+   const [unreadNotificationsCount, unreadMessagesCount] = await Promise.all([
+      getUnreadNotificationsCount({ recipientId: user.id }),
+      (await streamServerClient.getUnreadCount(user.id)).total_unread_count,
+   ])
 
    const menuItems = [
       {
@@ -23,9 +28,7 @@ export const MenuBar = async ({ className }: MenuBarProps) => {
          component: <NotificationsButton initialState={{ unreadCount: unreadNotificationsCount }} />,
       },
       {
-         name: 'Messages',
-         path: '/messages',
-         icon: Mail,
+         component: <MessagesButton initialState={{ unreadCount: unreadMessagesCount }} />,
       },
       {
          name: 'Bookmarks',
